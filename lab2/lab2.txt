@@ -10,3 +10,10 @@ aws ec2 describe-route-tables --route-table-id rtb-0bd97dac02e9e5076
 aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-0eba78edbd3f90a87"
 aws ec2 associate-route-table  --subnet-id subnet-0c371431757d1f19e --route-table-id rtb-0bd97dac02e9e5076
 aws ec2 modify-subnet-attribute --subnet-id subnet-0c371431757d1f19e --map-public-ip-on-launch
+
+aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text > MyKeyPair.pem
+aws ec2 create-security-group --group-name SSHAccess --description "Security group for SSH access" --vpc-id vpc-0eba78edbd3f90a87
+aws ec2 authorize-security-group-ingress --group-id sg-0753178e31c9785b5 --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+aws ec2 run-instances --image-id ami-03657b56516ab7912 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-0753178e31c9785b5 --subnet-id subnet-0c371431757d1f19e
+aws ec2 describe-instances --instance-id i-0c515617cd340c27b
