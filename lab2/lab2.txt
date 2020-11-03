@@ -16,4 +16,5 @@ aws ec2 create-security-group --group-name SSHAccess --description "Security gro
 aws ec2 authorize-security-group-ingress --group-id sg-0753178e31c9785b5 --protocol tcp --port 22 --cidr 0.0.0.0/0
 
 aws ec2 run-instances --image-id ami-03657b56516ab7912 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-0753178e31c9785b5 --subnet-id subnet-0c371431757d1f19e
-aws ec2 describe-instances --instance-id i-0c515617cd340c27b
+aws ec2 describe-instances --instance-id  i-0476da16afefd5090
+ssh -i "MyKeyPair.pem" ec2-user@3.138.140.84
