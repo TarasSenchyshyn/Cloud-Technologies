@@ -1,0 +1,13 @@
+aws ec2 create-security-group --group-name Lab3-SecurityGroup --description "for instance"
+aws ec2 authorize-security-group-ingress --group-id sg-0d8b8fa1d7e554c61 --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-0d8b8fa1d7e554c61 --protocol tcp --port 80 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-0d8b8fa1d7e554c61 --protocol tcp --port 443 --cidr 0.0.0.0/0
+aws s3 mb s3://taras-lab3 --region us-east-2
+aws s3 cp index.html s3://taras-lab3
+aws s3api put-object-acl --bucket taras-lab3 --key index.html --acl public-read
+aws ec2 run-instances --image-id ami-03657b56516ab7912 --count 1 --instance-type t2.micro --key-name MyNewKeyPair --associate-public-ip-address --user-data file://D:\cloud-tech\lab3\UserData.txt --security-group-ids sg-0d8b8fa1d7e554c61 --iam-instance-profile Name=EC2-S3Read-Role
+aws ec2 create-tags --resources i-0aff495852e465bf2 --tags Key=Name,Value=Lab3-Instance1
+aws ec2 create-tags --resources i-0aff495852e465bf2 --tags Key=Role,Value=WebServer
+aws ec2 create-image --instance-id i-0aff495852e465bf2 --name "AMI 3"
+Output: ami-0343573294f83fd67
+aws ec2 run-instances --image-id ami-0343573294f83fd67 --count 1 --instance-type t2.micro --key-name MyNewKeyPair --associate-public-ip-address --security-group-ids sg-0d8b8fa1d7e554c61
