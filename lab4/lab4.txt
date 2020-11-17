@@ -1,4 +1,4 @@
-aws elbv2 create-load-balancer --name My-Lab4-ELB --type application --scheme internet-facing --subnets subnet-c1924baa subnet-83acd3cf
+aws elbv2 create-load-balancer --name My-Lab4-ELB --type application --scheme internet-facing --subnets subnet-c1924baa subnet-781d0a02
 aws ec2 create-security-group --group-name My-Lab4-ELB-SG --description ALB-SG
 --> sg-0ccc729ca8ede008e
 aws ec2 authorize-security-group-ingress --group-id sg-0ccc729ca8ede008e --protocol tcp --port 80 --cidr 0.0.0.0/0
