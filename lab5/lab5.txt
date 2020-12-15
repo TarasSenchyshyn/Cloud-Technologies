@@ -7,6 +7,6 @@ export TG="Name=TargetGroup,Value=targetgroup/My-Lab4-Target-Group/d3c25d0fcf061
 aws cloudwatch put-metric-alarm --alarm-name elb-tg-notification --namespace AWS/ApplicationELB --metric-name HealthyHostCount --statistic Average --period 300 --threshold 2 --comparison-operator LessThanThreshold --dimensions $LB $TG --evaluation-periods 1 --alarm-actions arn:aws:sns:us-east-2:957133767953:ELB-Check
 
 export TG_ARN="arn:aws:elasticloadbalancing:us-east-2:957133767953:targetgroup/My-Lab4-Target-Group/d3c25d0fcf0613cf"
-export INSTANCE_ID="i-07232e768051db353"
+export INSTANCE_ID="i-017d1458094335916"
 
 aws elbv2 deregister-targets --target-group-arn $TG_ARN --targets Id=$INSTANCE_ID
