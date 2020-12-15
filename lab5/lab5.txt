@@ -1,12 +1,10 @@
 TOPIC_ARN=$(aws sns create-topic --name ELB-Check --query "TopicArn")
-export TOPIC_ARN="arn:aws:sns:us-east-2:957133767953:ELB-Check"
-arn:aws:sns:us-east-2:957133767953:ELB-Check
 export EMAIL="sen4uk**@ukr.net"
 aws sns subscribe --topic-arn $TOPIC_ARN --protocol email --notification-endpoint $EMAIL
 export LB="Name=LoadBalancer,Value=app/My-Lab4-ELB/d0dc3f1ba3e26219"
 export TG="Name=TargetGroup,Value=targetgroup/My-Lab4-Target-Group/d3c25d0fcf0613cf"
 
-aws cloudwatch put-metric-alarm --alarm-name elb-tg-notification --namespace AWS/ApplicationELB --metric-name HealthyHostCount --statistic Average --period 300 --threshold 2 --comparison-operator LessThanThreshold --dimensions $LB $TG --evaluation-periods 1 --alarm-actions $TOPIC_ARN
+aws cloudwatch put-metric-alarm --alarm-name elb-tg-notification --namespace AWS/ApplicationELB --metric-name HealthyHostCount --statistic Average --period 300 --threshold 2 --comparison-operator LessThanThreshold --dimensions $LB $TG --evaluation-periods 1 --alarm-actions arn:aws:sns:us-east-2:957133767953:ELB-Check
 
 export TG_ARN="arn:aws:elasticloadbalancing:us-east-2:957133767953:targetgroup/My-Lab4-Target-Group/d3c25d0fcf0613cf"
 export INSTANCE_ID="i-07232e768051db353"
