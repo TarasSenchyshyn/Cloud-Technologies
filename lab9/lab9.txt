@@ -1,0 +1,13 @@
+aws ecs create-cluster --cluster-name lab9-cluster
+
+aws ecs register-task-definition --cli-input-json file://definitions.json
+
+aws ecs list-task-definitions
+
+aws ecs create-service --cluster lab9-cluster 
+--service-name fargate-service-public
+--task-definition sample-fargate:1 
+--desired-count 1 --launch-type "FARGATE" 
+--network-configuration "awsvpcConfiguration={subnets=[subnet-83acd3cf],securityGroups=[sg-0ccc729ca8ede008e],assignPublicIp=ENABLED}"
+
+aws ecs describe-services --cluster lab9-cluster --services fargate-service-public
